@@ -8,13 +8,13 @@ class TicketRepository {
     getAll() {
         return Ticket.find({});
     }
-    async getTicket(id, userId) {
-        const check = await Ticket.findById({ id });
+    async getTicket(id,infoId, userId) {
+        const check = await Ticket.findOne({ id });
         if (check.status === false) { // koltuk dolu mu
             return "Koltuk dolu";
         }
-        const count = await Ticket.countDocuments({ userId: userId, id: id });
-        if (count > 4) { //kullanıcı koltuk sayısı
+        const count = await Ticket.countDocuments({ userId: userId, infoId: infoId} );
+        if (count>4) { //kullanıcı koltuk sayısı
             return "Daha fazla koltuk alamazsınız.";
         }
         else {
@@ -24,10 +24,11 @@ class TicketRepository {
             else { // tek sayı ise 1 ekle
                 const checkGender = await Ticket.findOne({ seatNo: check.seatNo + 1 });
             }
-            const gender = await User.findById({ id: userId });
+            const gender = await User.findOne({ userId });
+            console.log(gender);
             if (checkGender.status !== true) // yan boş değilse
             {
-                if (checkGender.id !== gender.id) { // id aynı değilse
+                if (checkGender.userId !== gender.id) { // id aynı değilse
                     if (checkGender.gender !== gender.gender) { //cinsiyet aynı değilse  değişecek kullanıcı
                         return "Farklı bir koltuk seçin";
                     }
@@ -39,7 +40,7 @@ class TicketRepository {
                 {
                     status:false,
                     $push: {
-                        userId: userId.id,
+                        userId: userId,
                     },
                 },
                 { new: true, useFindAndModify: false }

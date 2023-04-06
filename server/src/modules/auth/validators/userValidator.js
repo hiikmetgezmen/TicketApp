@@ -8,6 +8,6 @@ export const userValidator = [
     .normalizeEmail()
     .toLowerCase(),
   body("password").trim().isLength(2).withMessage("Password is too short"),
-  body("studentNumber").trim().isLength({ min: 9, max:9}).withMessage("Invalid student number."),
+  body("age").trim().isLength({ min: 1, max:2}).withMessage("Invalid age."),
   body("phone").trim().isLength(10).isMobilePhone("tr-TR").withMessage("Invalid phone number."),
 ];

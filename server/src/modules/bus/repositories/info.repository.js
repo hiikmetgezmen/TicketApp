@@ -1,4 +1,4 @@
-import Info from "../models/Info.schema";
+import Info from "../models/Info.schema.js";
 
 class InfoRepository{
     getById(id){

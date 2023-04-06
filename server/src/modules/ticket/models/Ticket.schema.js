@@ -17,14 +17,22 @@ export const TicketSchema = new Schema({
         default: null,
         required:[true, "gender is required"]
     },
-    userId:[
+    userId:
         {
-          type: mongoose.Schema.Types.ObjectId,
-          ref: "users",
+        //   type: mongoose.Schema.Types.ObjectId,
+        //   ref: "users",
+        type:String,
           default: null,
           required:[true, "userId is required"]
         },
-      ],
+      infoId:
+        {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "infos",
+          default: null,
+          required:[true, "infoId is required"]
+        },
+      
     
 })
 

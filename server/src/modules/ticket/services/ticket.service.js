@@ -7,9 +7,9 @@ class InfoService{
     getAll(){
         return TicketRepository.getAll();
     }
-    getTicket()
+    getTicket(id,infoId,userId)
     {
-        return TicketRepository.getTicket();
+        return TicketRepository.getTicket(id,infoId,userId);
     }
 
 }

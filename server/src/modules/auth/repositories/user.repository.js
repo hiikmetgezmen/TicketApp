@@ -1,13 +1,13 @@
 import User from "../models/User.schema.js";
-// import bcrypt from "bcrypt";
+import bcrypt from "bcrypt";
 import { ApiError } from "../../../common/apiError.js";
 import HttpStatusCodes from "http-status-codes";
 
 class UserRepository {
-  // async hashPassword(password) {
-  //   const salt = await bcrypt.genSalt();
-  //   return await bcrypt.hash(password, salt);
-  // }
+  async hashPassword(password) {
+    const salt = await bcrypt.genSalt();
+    return await bcrypt.hash(password, salt);
+  }
   async create(user) {
     const found = await this.ifExistUser(user.email);
     if (found != null)
@@ -16,7 +16,7 @@ class UserRepository {
         HttpStatusCodes.BAD_REQUEST,
         "userrepository->signup"
       );
-    // user.password = await this.hashPassword(user.password);
+    user.password = await this.hashPassword(user.password);
     return User.create(user);
   }
   ifExistUser(email) {
@@ -39,13 +39,13 @@ class UserRepository {
         HttpStatusCodes.NOT_FOUND,
         "userrepository->signin"
       );
-    // const isCompare = await bcrypt.compare(password, found.password);
-    // if (!isCompare)
-    //   throw new ApiError(
-    //     "Invalid email or password",
-    //     HttpStatusCodes.BAD_REQUEST,
-    //     "userrepository->signin"
-    //   );
+    const isCompare = await bcrypt.compare(password, found.password);
+    if (!isCompare)
+      throw new ApiError(
+        "Invalid email or password",
+        HttpStatusCodes.BAD_REQUEST,
+        "userrepository->signin"
+      );
     return found;
   }
  

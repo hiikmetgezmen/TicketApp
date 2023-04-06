@@ -18,14 +18,7 @@ export const InfoSchema = new Schema({
     date:{
         type:String,
         required:[true, "Date is required"]
-    },
-    statusId:[
-        {
-          type: mongoose.Schema.Types.ObjectId,
-          ref: "ticket",
-        },
-      ],
-    
+    }   
 })
 
 const Info = mongoose.model("info",InfoSchema);

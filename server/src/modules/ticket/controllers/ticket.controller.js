@@ -1,4 +1,6 @@
 import TicketService from "../services/ticket.service.js";
+import { ServiceResponse } from "../../../common/serviceResponse.js";
+import HttpStatusCodes from "http-status-codes";
 
 
 
@@ -16,9 +18,10 @@ export const getAll = async (req,res,next)=>{
 }
 export const takeTicketRequest = async (req, res, next) => {
     const user = req.user.id;
-    const id = req.body.id;
+    const infoId = req.body.infoId;
+    const id = req.params.id;
     try {
-      const response = await userSessionService.createUserSession(id,user);
+      const response = await TicketService.getTicket(id,infoId,user);
       return res
         .status(HttpStatusCodes.CREATED)
         .json(ServiceResponse.successWithData(response, HttpStatusCodes.CREATED));
