@@ -4,12 +4,12 @@ class InfoService{
     getById(id){
         return TicketRepository.getById(id);
     }
-    getAll(){
-        return TicketRepository.getAll();
+    getAll(infoId){
+        return TicketRepository.getAll(infoId);
     }
-    getTicket(id,infoId,userId)
+    getTicket(id,infoId,userId,gender)
     {
-        return TicketRepository.getTicket(id,infoId,userId);
+        return TicketRepository.getTicket(id,infoId,userId,gender);
     }
 
 }

@@ -7,8 +7,9 @@ import HttpStatusCodes from "http-status-codes";
 
 
 export const getAll = async (req,res,next)=>{
+    const infoId = req.body.infoId;
     try {
-        const data = await TicketService.getAll();
+        const data = await TicketService.getAll(infoId);
         return res
         .status(HttpStatusCodes.OK)
         .json(ServiceResponse.successWithData(data, HttpStatusCodes.OK));
@@ -18,10 +19,11 @@ export const getAll = async (req,res,next)=>{
 }
 export const takeTicketRequest = async (req, res, next) => {
     const user = req.user.id;
-    const infoId = req.body.infoId;
-    const id = req.body.id;
+    // const infoId = req.body.infoId;
+    // const id = req.body.id;
+    const {infoId,id,gender} = req.body
     try {
-      const response = await TicketService.getTicket(id,infoId,user);
+      const response = await TicketService.getTicket(id,infoId,user,gender);
       return res
         .status(HttpStatusCodes.CREATED)
         .json(ServiceResponse.successWithData(response, HttpStatusCodes.CREATED));

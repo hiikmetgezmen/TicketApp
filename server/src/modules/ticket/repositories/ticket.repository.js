@@ -5,10 +5,10 @@ class TicketRepository {
   getById(id) {
     return Ticket.findById({ id });
   }
-  getAll() {
-    return Ticket.find({});
+  getAll(infoId) {
+    return Ticket.find({infoId:infoId});
   }
-  async getTicket(id, infoId, userId) {
+  async getTicket(id, infoId, userId,gender) {
     const check = await Ticket.findById(id);
     console.log(check.id);
     if (check.status === false) {
@@ -27,11 +27,11 @@ class TicketRepository {
         var a = -1;
       }
       const checkGender = await Ticket.findOne({ seatNo: (check.seatNo - a) });
-      const gender = await User.findOne({ userId });
+      const user = await User.findOne({ userId });
       
       if (checkGender.status !== true) {
-        if (checkGender.userId !== gender.id) {
-          if (checkGender.gender !== gender.gender) {
+        if (checkGender.userId !== user.id) {
+          if (checkGender.gender !== gender) {
             return "Farklı bir koltuk seçin";
           }
         }
