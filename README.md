@@ -46,3 +46,6 @@ $ npm run build
 $ npm run preview
 ```
 
+## Get/Post istekleri
+
+[Document.docx](https://github.com/hiikmetgezmen/TicketApp/files/11182130/Document.docx)
