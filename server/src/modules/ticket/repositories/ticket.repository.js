@@ -1,58 +1,51 @@
 import Ticket from "../models/Ticket.schema.js";
-import User from "../../auth/models/User.schema.js"
+import User from "../../auth/models/User.schema.js";
 
 class TicketRepository {
-    getById(id) {
-        return Ticket.findById({ id });
+  getById(id) {
+    return Ticket.findById({ id });
+  }
+  getAll() {
+    return Ticket.find({});
+  }
+  async getTicket(id, infoId, userId) {
+    const check = await Ticket.findById(id);
+    console.log(check.id);
+    if (check.status === false) {
+      return "Koltuk dolu";
     }
-    getAll() {
-        return Ticket.find({});
+    const count = await Ticket.countDocuments({
+      userId: userId,
+      infoId: infoId,
+    });
+    if (count > 4) {
+      return "Daha fazla koltuk alamazsınız.";
+    } else {
+      if (check.seatNo % 2 == 0) {
+        var a = 1;
+      } else {
+        var a = -1;
+      }
+      const checkGender = await Ticket.findOne({ seatNo: (check.seatNo - a) });
+      const gender = await User.findOne({ userId });
+      
+      if (checkGender.status !== true) {
+        if (checkGender.userId !== gender.id) {
+          if (checkGender.gender !== gender.gender) {
+            return "Farklı bir koltuk seçin";
+          }
+        }
+      }
+       await Ticket.findByIdAndUpdate(
+        check.id,
+        {
+          status: false,
+          userId: userId,
+        },
+        { new: true, useFindAndModify: false }
+      );
     }
-    async getTicket(id,infoId, userId) {
-        const check = await Ticket.findOne({ id });
-        if (check.status === false) { // koltuk dolu mu
-            return "Koltuk dolu";
-        }
-        const count = await Ticket.countDocuments({ userId: userId, infoId: infoId} );
-        if (count>4) { //kullanıcı koltuk sayısı
-            return "Daha fazla koltuk alamazsınız.";
-        }
-        else {
-            if (check.seatNo % 2 == 0) { // çift sayı ise 1 çıkar
-                const checkGender = await Ticket.findOne({ seatNo: check.seatNo - 1 });
-            }
-            else { // tek sayı ise 1 ekle
-                const checkGender = await Ticket.findOne({ seatNo: check.seatNo + 1 });
-            }
-            const gender = await User.findOne({ userId });
-            console.log(gender);
-            if (checkGender.status !== true) // yan boş değilse
-            {
-                if (checkGender.userId !== gender.id) { // id aynı değilse
-                    if (checkGender.gender !== gender.gender) { //cinsiyet aynı değilse  değişecek kullanıcı
-                        return "Farklı bir koltuk seçin";
-                    }
-                }
-            }
-            //koltuğu al
-            return await Ticket.findByIdAndUpdate(
-                id.id,
-                {
-                    status:false,
-                    $push: {
-                        userId: userId,
-                    },
-                },
-                { new: true, useFindAndModify: false }
-            );
-
-
-
-        }
-
-    }
-
-
+  }
 }
 
 const instance = new TicketRepository();

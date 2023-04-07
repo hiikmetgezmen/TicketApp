@@ -19,9 +19,9 @@ export const TicketSchema = new Schema({
     },
     userId:
         {
-        //   type: mongoose.Schema.Types.ObjectId,
-        //   ref: "users",
-        type:String,
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "users",
+        // type:String,
           default: null,
           required:[true, "userId is required"]
         },

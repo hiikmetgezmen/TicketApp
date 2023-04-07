@@ -19,7 +19,7 @@ export const getAll = async (req,res,next)=>{
 export const takeTicketRequest = async (req, res, next) => {
     const user = req.user.id;
     const infoId = req.body.infoId;
-    const id = req.params.id;
+    const id = req.body.id;
     try {
       const response = await TicketService.getTicket(id,infoId,user);
       return res
