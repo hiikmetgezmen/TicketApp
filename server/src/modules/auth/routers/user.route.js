@@ -21,5 +21,16 @@ router
   .route("/:id")
   .get(controller.getByIdRequest);
 
+  router
+  .route("/myTickets")
+  .post(controller.getTicketInfo);
+
+  router
+  .route("/allTicketInfo")
+  .post(controller.getInfo);
+
+  router
+  .route("/ticketInfo")
+  .post(controller.getTicket);
 
 export default router;

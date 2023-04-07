@@ -31,6 +31,48 @@ export const getByIdRequest = async (req, res) => {
     .json(ServiceResponse.successWithData(data, HttpStatusCodes.OK));
 };
 
+export const getTicketInfo = async (req, res,next) => {
+  const id = req.user.id;
+  try {
+      const data = await userService.getTicketInfo(id);
+  return res
+    .status(HttpStatusCodes.OK)
+    .json(ServiceResponse.successWithData(data, HttpStatusCodes.OK));
+
+  } catch (error) {
+    next(error);
+  }
+
+};
+export const getInfo = async (req, res,next) => {
+  const id = req.user.id;
+  const ticketId = req.body.ticketId;
+  try {
+      const data = await userService.getInfo(id,ticketId);
+  return res
+    .status(HttpStatusCodes.OK)
+    .json(ServiceResponse.successWithData(data, HttpStatusCodes.OK));
+
+  } catch (error) {
+    next(error);
+  }
+
+};
+
+export const getTicket = async (req, res,next) => {
+  const {ticketId} = req.body;
+  try {
+      const data = await userService.getTicket(ticketId);
+  return res
+    .status(HttpStatusCodes.OK)
+    .json(ServiceResponse.successWithData(data, HttpStatusCodes.OK));
+
+  } catch (error) {
+    next(error);
+  }
+
+};
+
 export const getByTokenRequest = async (req, res) => {
   return res
     .status(HttpStatusCodes.OK)
@@ -57,4 +99,7 @@ export default {
   getByIdRequest,
   getByTokenRequest,
   updateNotifyTokenByIdRequest,
+  getTicketInfo,
+  getInfo,
+  getTicket
 };

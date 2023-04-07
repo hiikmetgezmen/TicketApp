@@ -2,6 +2,8 @@ import User from "../models/User.schema.js";
 import bcrypt from "bcrypt";
 import { ApiError } from "../../../common/apiError.js";
 import HttpStatusCodes from "http-status-codes";
+import Ticket from "../../ticket/models/Ticket.schema.js";
+import Info from "../../bus/models/Info.schema.js";
 
 class UserRepository {
   async hashPassword(password) {
@@ -30,6 +32,31 @@ class UserRepository {
   }
   getById(id) {
     return User.findById(id);
+  }
+  async getTicketInfo(id){
+    return await Ticket.find({userId:id});
+  }
+  async getTicket(ticketId){
+    const ticket =  await Ticket.findOne({id:ticketId});
+    const info = await Info.findById(ticket.infoId);
+    return {
+      "Bilet Bilgileri" : ticket,
+      "Detay" : info
+    }
+  }
+  async getInfo(id){
+  const result = [];
+  const ticket =  await Ticket.find({userId:id});
+    for (let i = 0; i < ticket.length; i++) {
+      const tickets = ticket[i];
+      const info = await Info.findById(tickets.infoId);
+      result.push({
+        id: tickets,
+        info:info
+      });
+    }
+
+    return result;
   }
   async getByEmailAndPassword(email, password) {
     const found = await this.ifExistUser(email);

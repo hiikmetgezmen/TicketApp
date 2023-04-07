@@ -5,9 +5,25 @@ class TicketRepository {
   getById(id) {
     return Ticket.findById({ id });
   }
-  getAll(infoId) {
-    return Ticket.find({infoId:infoId});
+  async getAll(infoId) {
+    const ticket = await Ticket.find({infoId:infoId});
+    const count = await Ticket.countDocuments({
+      infoId: infoId,
+    }); 
+    const empty = await Ticket.countDocuments({
+      infoId: infoId,
+      status:true
+    }); 
+
+    return {
+      "Koltuk Sayısı": count,
+      "Boş koltuk sayısı":empty,
+      "Bilet Bilgileri": ticket,
+    };
   }
+
+  
+
   async getTicket(id, infoId, userId,gender) {
     const check = await Ticket.findById(id);
     console.log(check.id);

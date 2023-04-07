@@ -11,6 +11,18 @@ class UserService {
     const user = await userRepository.getById(id);
     return new UserViewDto(user);
   }
+  async getTicketInfo(id) {
+    const user = await userRepository.getTicketInfo(id);
+    return user;
+  }
+  async getTicket(ticketId) {
+    const user = await userRepository.getTicket(ticketId);
+    return user;
+  }
+  async getInfo(id) {
+    const user = await userRepository.getInfo(id);
+    return user;
+  }
   async createUser(user) {
     const created = await userRepository.create(user);
     return new UserViewDto(created);
