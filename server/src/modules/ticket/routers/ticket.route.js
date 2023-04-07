@@ -7,8 +7,8 @@ const router = express.Router();
 
 router
   .route("/")
-  .post(requiredAuthMiddleware,controller.takeTicketRequest );
-  
+  .post(requiredAuthMiddleware,controller.takeTicketRequest);
+
   router
   .route("/all")
   .post(requiredAuthMiddleware, controller.getAll);

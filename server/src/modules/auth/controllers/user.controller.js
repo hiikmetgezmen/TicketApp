@@ -46,9 +46,8 @@ export const getTicketInfo = async (req, res,next) => {
 };
 export const getInfo = async (req, res,next) => {
   const id = req.user.id;
-  const ticketId = req.body.ticketId;
   try {
-      const data = await userService.getInfo(id,ticketId);
+      const data = await userService.getInfo(id);
   return res
     .status(HttpStatusCodes.OK)
     .json(ServiceResponse.successWithData(data, HttpStatusCodes.OK));
