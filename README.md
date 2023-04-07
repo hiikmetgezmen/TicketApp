@@ -27,6 +27,8 @@ Giriş yapan kullanıcı otobüs seferlerini listeyebilir. İstediği seferin ay
 ## Kurulum
 Server projelerinin içerisinde bullanan .env.example dosyalarının adlarını .env olacak şekilde yeniden adlandırın ve içerisinde istenilen bilgileri düzenleyin
 
+Bilgiler .env.example dosyası içinde yer almaktadır.
+
 ### Server projesinin kurulumu
 
 ```bash
